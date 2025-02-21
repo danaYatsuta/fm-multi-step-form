@@ -30,7 +30,7 @@ function onStepButtonClick(step: number) {
 
       <p class="text-cool-gray mt-2">Please provide your name, email address, and phone number.</p>
 
-      <form class="mt-4 flex flex-col gap-3" @submit.prevent>
+      <form id="form" class="mt-4 flex flex-col gap-3" @submit.prevent>
         <FormTextInput id="name" placeholder="e.g. Stephen King">Name</FormTextInput>
         <FormTextInput id="email" placeholder="e.g. stephenking@lorem.com"
           >Email Address</FormTextInput
@@ -43,6 +43,14 @@ function onStepButtonClick(step: number) {
       </form>
     </main>
 
-    <div class="absolute right-0 bottom-0 left-0 h-18 bg-white"></div>
+    <div class="absolute right-0 bottom-0 left-0 flex h-18 items-center justify-end bg-white">
+      <button
+        type="submit"
+        form="form"
+        class="bg-marine-blue hover:bg-light-marine-blue mr-4 h-10 rounded-sm px-4 text-sm font-bold text-white"
+      >
+        Next Step
+      </button>
+    </div>
   </div>
 </template>
