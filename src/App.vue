@@ -81,11 +81,12 @@ function onSubmit() {
           v-model="form.email"
           :error-message="formErrors.email"
           placeholder="e.g. stephenking@lorem.com"
+          type="email"
           @change="validateEmail"
           >Email Address</FormTextInput
         >
 
-        <FormTextInput id="phone_number" placeholder="e.g. +1 234 567 890"
+        <FormTextInput id="phone_number" placeholder="e.g. +1 234 567 890" type="tel"
           >Phone Number</FormTextInput
         >
 
