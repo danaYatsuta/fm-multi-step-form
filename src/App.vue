@@ -1,3 +1,3 @@
 <template>
-  <p class="font-bold text-red-500">Hello world</p>
+  <div class="font-ubuntu"></div>
 </template>
