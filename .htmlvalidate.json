@@ -8,5 +8,9 @@
   "elements": ["html5"],
   "transform": {
     "^.*\\.vue$": "html-validate-vue"
+  },
+  "rules": {
+    "element-case": "off",
+    "element-name": "off"
   }
 }
