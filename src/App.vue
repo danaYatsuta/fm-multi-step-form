@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import validator from 'validator'
 import { ref } from 'vue'
-import StepButton from './components/StepButton.vue'
 import FormTextInput from './components/FormTextInput.vue'
+import StepButton from './components/StepButton.vue'
 
 const currentStep = ref(1)
 const lastCompletedStep = ref(1)
@@ -30,8 +31,19 @@ function validateName() {
   }
 }
 
+function validateEmail() {
+  if (form.value.email === '') {
+    formErrors.value.email = 'This field is required'
+  } else if (!validator.isEmail(form.value.email)) {
+    formErrors.value.email = 'Enter valid email'
+  } else {
+    formErrors.value.email = ''
+  }
+}
+
 function onSubmit() {
   validateName()
+  validateEmail()
 }
 </script>
 
@@ -63,9 +75,16 @@ function onSubmit() {
           @change="validateName"
           >Name</FormTextInput
         >
-        <FormTextInput id="email" placeholder="e.g. stephenking@lorem.com"
+
+        <FormTextInput
+          id="email"
+          v-model="form.email"
+          :error-message="formErrors.email"
+          placeholder="e.g. stephenking@lorem.com"
+          @change="validateEmail"
           >Email Address</FormTextInput
         >
+
         <FormTextInput id="phone_number" placeholder="e.g. +1 234 567 890"
           >Phone Number</FormTextInput
         >
