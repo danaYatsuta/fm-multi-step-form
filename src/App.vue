@@ -6,8 +6,32 @@ import FormTextInput from './components/FormTextInput.vue'
 const currentStep = ref(1)
 const lastCompletedStep = ref(1)
 
+const form = ref({
+  name: '',
+  email: '',
+  phoneNumber: '',
+})
+
+const formErrors = ref({
+  name: '',
+  email: '',
+  phoneNumber: '',
+})
+
 function onStepButtonClick(step: number) {
   if (step <= lastCompletedStep.value) currentStep.value = step
+}
+
+function validateName() {
+  if (form.value.name === '') {
+    formErrors.value.name = 'This field is required'
+  } else {
+    formErrors.value.name = ''
+  }
+}
+
+function onSubmit() {
+  validateName()
 }
 </script>
 
@@ -30,8 +54,15 @@ function onStepButtonClick(step: number) {
 
       <p class="text-cool-gray mt-2">Please provide your name, email address, and phone number.</p>
 
-      <form id="form" class="mt-4 flex flex-col gap-3" @submit.prevent>
-        <FormTextInput id="name" placeholder="e.g. Stephen King">Name</FormTextInput>
+      <form id="form" class="mt-4 flex flex-col gap-3" @submit.prevent="onSubmit">
+        <FormTextInput
+          id="name"
+          v-model.trim="form.name"
+          placeholder="e.g. Stephen King"
+          :error-message="formErrors.name"
+          @change="validateName"
+          >Name</FormTextInput
+        >
         <FormTextInput id="email" placeholder="e.g. stephenking@lorem.com"
           >Email Address</FormTextInput
         >
