@@ -12,7 +12,7 @@ function onStepButtonClick(step: number) {
 
 <template>
   <div
-    class="font-ubuntu bg-magnolia flex min-h-screen flex-col bg-[url(./img/bg-sidebar-mobile.svg)] bg-no-repeat"
+    class="font-ubuntu bg-magnolia flex min-h-screen flex-col gap-8 bg-[url(./img/bg-sidebar-mobile.svg)] bg-no-repeat"
   >
     <nav class="mt-8 flex gap-4 self-center">
       <StepButton
@@ -23,6 +23,12 @@ function onStepButtonClick(step: number) {
         @click="onStepButtonClick(step)"
       />
     </nav>
+
+    <main class="mx-4 rounded-lg bg-white px-6 py-8 shadow-lg">
+      <h1 class="text-marine-blue text-2xl font-bold">Personal info</h1>
+      <p class="text-cool-gray mt-2">Please provide your name, email address, and phone number.</p>
+    </main>
+
     <div class="absolute right-0 bottom-0 left-0 h-18 bg-white"></div>
   </div>
 </template>
