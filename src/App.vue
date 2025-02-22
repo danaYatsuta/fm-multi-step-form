@@ -41,9 +41,20 @@ function validateEmail() {
   }
 }
 
+function validatePhoneNumber() {
+  if (form.value.phoneNumber === '') {
+    formErrors.value.phoneNumber = 'This field is required'
+  } else if (!validator.isMobilePhone(form.value.phoneNumber)) {
+    formErrors.value.phoneNumber = 'Enter valid phone number'
+  } else {
+    formErrors.value.phoneNumber = ''
+  }
+}
+
 function onSubmit() {
   validateName()
   validateEmail()
+  validatePhoneNumber()
 }
 </script>
 
@@ -70,15 +81,15 @@ function onSubmit() {
         <FormTextInput
           id="name"
           v-model.trim="form.name"
-          placeholder="e.g. Stephen King"
           :error-message="formErrors.name"
+          placeholder="e.g. Stephen King"
           @change="validateName"
           >Name</FormTextInput
         >
 
         <FormTextInput
           id="email"
-          v-model="form.email"
+          v-model.trim="form.email"
           :error-message="formErrors.email"
           placeholder="e.g. stephenking@lorem.com"
           type="email"
@@ -86,7 +97,13 @@ function onSubmit() {
           >Email Address</FormTextInput
         >
 
-        <FormTextInput id="phone_number" placeholder="e.g. +1 234 567 890" type="tel"
+        <FormTextInput
+          id="phone_number"
+          v-model.trim="form.phoneNumber"
+          :error-message="formErrors.phoneNumber"
+          placeholder="e.g. +1 234 567 890"
+          type="tel"
+          @change="validatePhoneNumber"
           >Phone Number</FormTextInput
         >
 
