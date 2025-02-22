@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Form, FormErrors } from '@/types'
+import AppHeader from './AppHeader.vue'
 import FormTextInput from './FormTextInput.vue'
 
 defineEmits(['submit'])
@@ -12,7 +13,7 @@ defineProps<{
 </script>
 
 <template>
-  <h1 class="text-marine-blue text-2xl font-bold">Personal info</h1>
+  <AppHeader>Personal info</AppHeader>
 
   <p class="text-cool-gray mt-2">Please provide your name, email address, and phone number.</p>
 
