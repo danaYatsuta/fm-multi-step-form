@@ -1,29 +1,28 @@
 <script setup lang="ts">
 import validator from 'validator'
 import { ref } from 'vue'
-import FormTextInput from './components/FormTextInput.vue'
 import StepButton from './components/StepButton.vue'
+import StepOne from './components/StepOne.vue'
+import type { Form, FormErrors } from './types'
 
-const currentStep = ref(1)
-const lastAvailableStep = ref(1)
+type Step = 1 | 2 | 3 | 4
 
-const form = ref({
+const currentStep = ref<Step>(1)
+const lastAvailableStep = ref<Step>(1)
+
+const form = ref<Form>({
   name: '',
   email: '',
   phoneNumber: '',
 })
 
-const formErrors = ref({
-  name: '',
-  email: '',
-  phoneNumber: '',
-})
+const formErrors = ref<FormErrors>({})
 
 function validateName() {
   if (form.value.name === '') {
     formErrors.value.name = 'This field is required'
   } else {
-    formErrors.value.name = ''
+    delete formErrors.value.name
   }
 }
 
@@ -33,7 +32,7 @@ function validateEmail() {
   } else if (!validator.isEmail(form.value.email)) {
     formErrors.value.email = 'Enter valid email'
   } else {
-    formErrors.value.email = ''
+    delete formErrors.value.email
   }
 }
 
@@ -43,7 +42,7 @@ function validatePhoneNumber() {
   } else if (!validator.isMobilePhone(form.value.phoneNumber)) {
     formErrors.value.phoneNumber = 'Enter valid phone number'
   } else {
-    formErrors.value.phoneNumber = ''
+    delete formErrors.value.phoneNumber
   }
 }
 
@@ -63,7 +62,7 @@ function validateForm(): boolean {
   return true
 }
 
-function onStepButtonClick(step: number) {
+function onStepButtonClick(step: Step) {
   if (step === currentStep.value || step > lastAvailableStep.value) return
   if (currentStep.value === 1 && validateForm() === false) return
 
@@ -72,6 +71,10 @@ function onStepButtonClick(step: number) {
 
 function onSubmit() {
   if (validateForm()) currentStep.value = lastAvailableStep.value = 2
+}
+
+function onNextStepButtonClick() {
+  if (currentStep.value === 1) onSubmit()
 }
 </script>
 
@@ -85,54 +88,27 @@ function onSubmit() {
         :key="step"
         :number="step"
         :active="step == currentStep"
-        @click="onStepButtonClick(step)"
+        @click="onStepButtonClick(step as Step)"
       />
     </nav>
 
     <main class="mx-4 rounded-lg bg-white px-6 py-8 shadow-lg">
-      <h1 class="text-marine-blue text-2xl font-bold">Personal info</h1>
-
-      <p class="text-cool-gray mt-2">Please provide your name, email address, and phone number.</p>
-
-      <form id="form" class="mt-4 flex flex-col gap-3" @submit.prevent="onSubmit">
-        <FormTextInput
-          id="name"
-          v-model.trim="form.name"
-          :error-message="formErrors.name"
-          placeholder="e.g. Stephen King"
-          @change="validateName"
-          >Name</FormTextInput
-        >
-
-        <FormTextInput
-          id="email"
-          v-model.trim="form.email"
-          :error-message="formErrors.email"
-          placeholder="e.g. stephenking@lorem.com"
-          type="email"
-          @change="validateEmail"
-          >Email Address</FormTextInput
-        >
-
-        <FormTextInput
-          id="phone_number"
-          v-model.trim="form.phoneNumber"
-          :error-message="formErrors.phoneNumber"
-          placeholder="e.g. +1 234 567 890"
-          type="tel"
-          @change="validatePhoneNumber"
-          >Phone Number</FormTextInput
-        >
-
-        <button type="submit" class="hidden" aria-label="Next Step"></button>
-      </form>
+      <StepOne
+        v-if="currentStep === 1"
+        v-model="form"
+        :form-errors="formErrors"
+        @name-change="validateName"
+        @email-change="validateEmail"
+        @phone-number-change="validatePhoneNumber"
+        @submit="onSubmit"
+      ></StepOne>
     </main>
 
     <div class="absolute right-0 bottom-0 left-0 flex h-18 items-center justify-end bg-white">
       <button
-        type="submit"
-        form="form"
+        type="button"
         class="bg-marine-blue hover:bg-light-marine-blue mr-4 h-10 rounded-sm px-4 text-sm font-bold text-white"
+        @click="onNextStepButtonClick"
       >
         Next Step
       </button>
