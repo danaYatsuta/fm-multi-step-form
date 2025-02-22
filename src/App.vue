@@ -5,7 +5,7 @@ import FormTextInput from './components/FormTextInput.vue'
 import StepButton from './components/StepButton.vue'
 
 const currentStep = ref(1)
-const lastCompletedStep = ref(1)
+const lastAvailableStep = ref(1)
 
 const form = ref({
   name: '',
@@ -20,7 +20,7 @@ const formErrors = ref({
 })
 
 function onStepButtonClick(step: number) {
-  if (step <= lastCompletedStep.value) currentStep.value = step
+  if (step <= lastAvailableStep.value) currentStep.value = step
 }
 
 function validateName() {
@@ -55,6 +55,16 @@ function onSubmit() {
   validateName()
   validateEmail()
   validatePhoneNumber()
+
+  let key: keyof typeof formErrors.value
+
+  for (key in formErrors.value) {
+    if (formErrors.value[key]) {
+      return
+    }
+  }
+
+  currentStep.value = lastAvailableStep.value = 2
 }
 </script>
 
