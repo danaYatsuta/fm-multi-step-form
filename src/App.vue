@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import validator from 'validator'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import StepButton from './components/StepButton.vue'
 import StepOne from './components/StepOne.vue'
 import type { Form, FormErrors } from './types'
@@ -45,6 +45,10 @@ function validatePhoneNumber() {
     delete formErrors.value.phoneNumber
   }
 }
+
+watch(() => form.value.name, validateName)
+watch(() => form.value.email, validateEmail)
+watch(() => form.value.phoneNumber, validatePhoneNumber)
 
 function validateForm(): boolean {
   validateName()
@@ -97,9 +101,6 @@ function onNextStepButtonClick() {
         v-if="currentStep === 1"
         v-model="form"
         :form-errors="formErrors"
-        @name-change="validateName"
-        @email-change="validateEmail"
-        @phone-number-change="validatePhoneNumber"
         @submit="onSubmit"
       ></StepOne>
     </main>

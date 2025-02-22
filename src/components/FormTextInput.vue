@@ -19,7 +19,7 @@ const model = defineModel<string>()
     </div>
     <input
       :id
-      v-model="model"
+      v-model.lazy.trim="model"
       type="text"
       v-bind="$attrs"
       class="border-light-gray placeholder:text-cool-gray focus:border-purplish-blue h-10 rounded-sm border px-3 text-sm font-medium outline-none"
