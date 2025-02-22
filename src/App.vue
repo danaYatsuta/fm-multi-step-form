@@ -19,10 +19,6 @@ const formErrors = ref({
   phoneNumber: '',
 })
 
-function onStepButtonClick(step: number) {
-  if (step <= lastAvailableStep.value) currentStep.value = step
-}
-
 function validateName() {
   if (form.value.name === '') {
     formErrors.value.name = 'This field is required'
@@ -51,7 +47,7 @@ function validatePhoneNumber() {
   }
 }
 
-function onSubmit() {
+function validateForm(): boolean {
   validateName()
   validateEmail()
   validatePhoneNumber()
@@ -60,11 +56,22 @@ function onSubmit() {
 
   for (key in formErrors.value) {
     if (formErrors.value[key]) {
-      return
+      return false
     }
   }
 
-  currentStep.value = lastAvailableStep.value = 2
+  return true
+}
+
+function onStepButtonClick(step: number) {
+  if (step === currentStep.value || step > lastAvailableStep.value) return
+  if (currentStep.value === 1 && validateForm() === false) return
+
+  currentStep.value = step
+}
+
+function onSubmit() {
+  if (validateForm()) currentStep.value = lastAvailableStep.value = 2
 }
 </script>
 
