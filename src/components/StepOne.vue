@@ -15,7 +15,7 @@ defineProps<{
 <template>
   <AppHeader>Personal info</AppHeader>
 
-  <p class="text-cool-gray mt-2">Please provide your name, email address, and phone number.</p>
+  <p class="mt-2">Please provide your name, email address, and phone number.</p>
 
   <form id="form" class="mt-4 flex flex-col gap-3" @submit.prevent="$emit('submit')">
     <FormTextInput

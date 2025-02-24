@@ -3,17 +3,19 @@ import validator from 'validator'
 import { ref, watch } from 'vue'
 import StepButton from './components/StepButton.vue'
 import StepOne from './components/StepOne.vue'
-import type { Form, FormErrors } from './types'
+import StepTwo from './components/StepTwo.vue'
+import type { Form, FormErrors } from './types.d.ts'
 
 type Step = 1 | 2 | 3 | 4
 
-const currentStep = ref<Step>(1)
+const currentStep = ref<Step>(2)
 const lastAvailableStep = ref<Step>(1)
 
 const form = ref<Form>({
   name: '',
   email: '',
   phoneNumber: '',
+  plan: 'arcade',
 })
 
 const formErrors = ref<FormErrors>({})
@@ -84,7 +86,7 @@ function onNextStepButtonClick() {
 
 <template>
   <div
-    class="font-ubuntu bg-magnolia flex min-h-screen flex-col gap-8 bg-[url(./img/bg-sidebar-mobile.svg)] bg-no-repeat"
+    class="font-ubuntu bg-magnolia text-cool-gray flex min-h-screen flex-col gap-8 bg-[url(./img/bg-sidebar-mobile.svg)] bg-no-repeat"
   >
     <nav class="mt-8 flex gap-4 self-center">
       <StepButton
@@ -102,7 +104,9 @@ function onNextStepButtonClick() {
         v-model="form"
         :form-errors="formErrors"
         @submit="onSubmit"
-      ></StepOne>
+      />
+
+      <StepTwo v-if="currentStep === 2" v-model="form.plan" />
     </main>
 
     <div class="absolute right-0 bottom-0 left-0 flex h-18 items-center justify-end bg-white">
