@@ -17,14 +17,14 @@ const model = defineModel<Form>({ required: true })
       value="arcade"
       icon="icon-arcade.svg"
       plan-name="Arcade"
-      price="$9/mo"
+      :price="model.isYearly ? '$90/yr' : '$9/mo'"
     />
 
     <PlanRadioButton
       v-model="model.plan"
       icon="icon-advanced.svg"
       plan-name="Advanced"
-      price="$12/mo"
+      :price="model.isYearly ? '$120/yr' : '$12/mo'"
       value="advanced"
     />
 
@@ -32,7 +32,7 @@ const model = defineModel<Form>({ required: true })
       v-model="model.plan"
       icon="icon-pro.svg"
       plan-name="Pro"
-      price="$15/mo"
+      :price="model.isYearly ? '$150/yr' : '$15/mo'"
       value="pro"
     />
 
