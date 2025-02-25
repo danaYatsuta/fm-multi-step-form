@@ -18,6 +18,7 @@ const model = defineModel<Form>({ required: true })
       icon="icon-arcade.svg"
       plan-name="Arcade"
       :price="model.isYearly ? '$90/yr' : '$9/mo'"
+      :extra-info="model.isYearly ? '2 months free' : undefined"
     />
 
     <PlanRadioButton
@@ -26,6 +27,7 @@ const model = defineModel<Form>({ required: true })
       plan-name="Advanced"
       :price="model.isYearly ? '$120/yr' : '$12/mo'"
       value="advanced"
+      :extra-info="model.isYearly ? '2 months free' : undefined"
     />
 
     <PlanRadioButton
@@ -34,6 +36,7 @@ const model = defineModel<Form>({ required: true })
       plan-name="Pro"
       :price="model.isYearly ? '$150/yr' : '$15/mo'"
       value="pro"
+      :extra-info="model.isYearly ? '2 months free' : undefined"
     />
 
     <div

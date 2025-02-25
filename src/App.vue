@@ -110,7 +110,7 @@ function onNextStepButtonClick() {
       <StepTwo v-if="currentStep === 2" v-model="form" />
     </main>
 
-    <div class="absolute right-0 bottom-0 left-0 flex h-18 items-center justify-end bg-white">
+    <div class="sticky right-0 bottom-0 left-0 flex h-18 items-center justify-end bg-white">
       <button
         type="button"
         class="bg-marine-blue hover:bg-light-marine-blue mr-4 h-10 rounded-sm px-4 text-sm font-bold text-white"
