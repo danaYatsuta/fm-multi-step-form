@@ -5,6 +5,7 @@ export interface Form {
   email: string
   phoneNumber: string
   plan: Plan
+  isYearly: boolean
 }
 
 export interface FormErrors {

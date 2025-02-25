@@ -16,6 +16,7 @@ const form = ref<Form>({
   email: '',
   phoneNumber: '',
   plan: 'arcade',
+  isYearly: false,
 })
 
 const formErrors = ref<FormErrors>({})
@@ -106,7 +107,7 @@ function onNextStepButtonClick() {
         @submit="onSubmit"
       />
 
-      <StepTwo v-if="currentStep === 2" v-model="form.plan" />
+      <StepTwo v-if="currentStep === 2" v-model="form" />
     </main>
 
     <div class="absolute right-0 bottom-0 left-0 flex h-18 items-center justify-end bg-white">
