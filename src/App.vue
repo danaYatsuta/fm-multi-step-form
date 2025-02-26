@@ -120,10 +120,22 @@ function onNextStepButtonClick() {
       </main>
     </div>
 
-    <div class="flex h-18 items-center justify-end bg-white">
+    <div
+      class="flex h-18 items-center bg-white px-4"
+      :class="{ 'justify-end': currentStep === 1, 'justify-between': currentStep > 1 }"
+    >
+      <button
+        v-if="currentStep > 1"
+        type="button"
+        class="text-sm font-medium"
+        @click="currentStep--"
+      >
+        Go Back
+      </button>
+
       <button
         type="button"
-        class="bg-marine-blue hover:bg-light-marine-blue mr-4 h-10 rounded-sm px-4 text-sm font-bold text-white"
+        class="bg-marine-blue hover:bg-light-marine-blue h-10 rounded-sm px-4 text-sm font-bold text-white"
         @click="onNextStepButtonClick"
       >
         Next Step
