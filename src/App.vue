@@ -95,30 +95,32 @@ function onNextStepButtonClick() {
 
 <template>
   <div
-    class="font-ubuntu bg-magnolia text-cool-gray flex min-h-screen flex-col gap-8 bg-[url(./img/bg-sidebar-mobile.svg)] bg-no-repeat"
+    class="font-ubuntu bg-magnolia text-cool-gray flex min-h-screen flex-col justify-between gap-6 bg-[url(./img/bg-sidebar-mobile.svg)] bg-no-repeat"
   >
-    <nav class="mt-8 flex gap-4 self-center">
-      <StepButton
-        v-for="step in 4"
-        :key="step"
-        :number="step"
-        :active="step == currentStep"
-        @click="onStepButtonClick(step as Step)"
-      />
-    </nav>
+    <div class="mt-8 flex flex-col gap-8">
+      <nav class="flex gap-4 self-center">
+        <StepButton
+          v-for="step in 4"
+          :key="step"
+          :number="step"
+          :active="step == currentStep"
+          @click="onStepButtonClick(step as Step)"
+        />
+      </nav>
 
-    <main class="mx-4 rounded-lg bg-white px-6 py-8 shadow-lg">
-      <StepOne
-        v-if="currentStep === 1"
-        v-model="form"
-        :form-errors="formErrors"
-        @submit="onSubmit"
-      />
+      <main class="mx-4 rounded-lg bg-white px-6 py-8 shadow-lg">
+        <StepOne
+          v-if="currentStep === 1"
+          v-model="form"
+          :form-errors="formErrors"
+          @submit="onSubmit"
+        />
 
-      <StepTwo v-if="currentStep === 2" v-model="form" />
-    </main>
+        <StepTwo v-if="currentStep === 2" v-model="form" />
+      </main>
+    </div>
 
-    <div class="sticky right-0 bottom-0 left-0 flex h-18 items-center justify-end bg-white">
+    <div class="flex h-18 items-center justify-end bg-white">
       <button
         type="button"
         class="bg-marine-blue hover:bg-light-marine-blue mr-4 h-10 rounded-sm px-4 text-sm font-bold text-white"
