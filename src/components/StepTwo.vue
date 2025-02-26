@@ -3,6 +3,8 @@ import AppHeader from './AppHeader.vue'
 import PlanRadioButton from './PlanRadioButton.vue'
 import type { Form } from '@/types.d.ts'
 
+defineEmits(['submit'])
+
 const model = defineModel<Form>({ required: true })
 </script>
 
@@ -11,7 +13,7 @@ const model = defineModel<Form>({ required: true })
 
   <p class="mt-2">You have the option of monthly or yearly billing.</p>
 
-  <form class="mt-5 flex flex-col gap-3" @submit.prevent>
+  <form class="mt-5 flex flex-col gap-3" @submit.prevent="$emit('submit')">
     <PlanRadioButton
       v-model="model.plan"
       value="arcade"
