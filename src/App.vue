@@ -4,12 +4,13 @@ import { ref, watch } from 'vue'
 import StepButton from './components/StepButton.vue'
 import StepOne from './components/StepOne.vue'
 import StepTwo from './components/StepTwo.vue'
+import StepThree from './components/StepThree.vue'
 import type { Form, FormErrors } from './types.d.ts'
 
 type Step = 1 | 2 | 3 | 4
 
-const currentStep = ref<Step>(2)
-const lastAvailableStep = ref<Step>(1)
+const currentStep = ref<Step>(3)
+const lastAvailableStep = ref<Step>(3)
 
 const form = ref<Form>({
   name: '',
