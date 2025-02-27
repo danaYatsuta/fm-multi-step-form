@@ -124,7 +124,11 @@ function onNextStepButtonClick() {
           @submit="currentStep = lastAvailableStep = 3"
         />
 
-        <StepThree v-if="currentStep === 3" v-model="form" />
+        <StepThree
+          v-if="currentStep === 3"
+          v-model="form"
+          @submit="currentStep = lastAvailableStep = 4"
+        />
       </main>
     </div>
 

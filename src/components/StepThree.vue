@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import AppHeader from './AppHeader.vue'
-import AddonCheckbox from './AddonCheckbox.vue'
 import type { Form } from '@/types'
+import AddonCheckbox from './AddonCheckbox.vue'
+import AppHeader from './AppHeader.vue'
+
+defineEmits(['submit'])
 
 const model = defineModel<Form>({ required: true })
 </script>
@@ -11,7 +13,7 @@ const model = defineModel<Form>({ required: true })
 
   <p class="mt-2">Add-ons help enhance your gaming experience.</p>
 
-  <form class="mt-5 flex flex-col gap-3" @submit.prevent>
+  <form class="mt-5 flex flex-col gap-3" @submit.prevent="$emit('submit')">
     <AddonCheckbox
       v-model="model.addons"
       addon-name="Online service"
