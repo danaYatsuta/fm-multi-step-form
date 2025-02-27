@@ -18,6 +18,7 @@ const form = ref<Form>({
   phoneNumber: '',
   plan: 'arcade',
   isYearly: false,
+  addons: [],
 })
 
 const formErrors = ref<FormErrors>({})
@@ -123,7 +124,7 @@ function onNextStepButtonClick() {
           @submit="currentStep = lastAvailableStep = 3"
         />
 
-        <StepThree v-if="currentStep === 3" />
+        <StepThree v-if="currentStep === 3" v-model="form" />
       </main>
     </div>
 
