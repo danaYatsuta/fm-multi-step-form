@@ -147,7 +147,7 @@ function onNextStepButtonClick() {
 
       <button
         type="button"
-        class="bg-marine-blue hover:bg-light-marine-blue h-10 rounded-sm px-4 text-sm font-bold text-white"
+        class="bg-marine-blue h-10 rounded-sm px-4 text-sm font-bold text-white"
         @click="onNextStepButtonClick"
       >
         Next Step
