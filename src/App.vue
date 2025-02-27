@@ -5,12 +5,13 @@ import StepButton from './components/StepButton.vue'
 import StepOne from './components/StepOne.vue'
 import StepTwo from './components/StepTwo.vue'
 import StepThree from './components/StepThree.vue'
+import StepFour from './components/StepFour.vue'
 import type { Form, FormErrors } from './types.d.ts'
 
 type Step = 1 | 2 | 3 | 4
 
-const currentStep = ref<Step>(3)
-const lastAvailableStep = ref<Step>(3)
+const currentStep = ref<Step>(4)
+const lastAvailableStep = ref<Step>(4)
 
 const form = ref<Form>({
   name: '',
@@ -129,6 +130,8 @@ function onNextStepButtonClick() {
           v-model="form"
           @submit="currentStep = lastAvailableStep = 4"
         />
+
+        <StepFour v-if="currentStep === 4" />
       </main>
     </div>
 
