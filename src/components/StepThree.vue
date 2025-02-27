@@ -16,7 +16,7 @@ const model = defineModel<Form>({ required: true })
       v-model="model.addons"
       addon-name="Online service"
       description="Access to multiplayer games"
-      price="+$1/mo"
+      :price="model.isYearly ? '+$10/yr' : '+$1/mo'"
       value="online_service"
     />
 
@@ -24,7 +24,7 @@ const model = defineModel<Form>({ required: true })
       v-model="model.addons"
       addon-name="Larger storage"
       description="Extra 1TB of cloud save"
-      price="+$2/mo"
+      :price="model.isYearly ? '+$20/yr' : '+$2/mo'"
       value="larger_storage"
     />
 
@@ -32,7 +32,7 @@ const model = defineModel<Form>({ required: true })
       v-model="model.addons"
       addon-name="Customizable profile"
       description="Custom theme on your profile"
-      price="+$2/mo"
+      :price="model.isYearly ? '+$20/yr' : '+$2/mo'"
       value="customizable_profile"
     />
 
