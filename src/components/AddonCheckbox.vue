@@ -25,7 +25,7 @@ const model = defineModel<Addon[]>()
       </span>
     </span>
     <span class="text-purplish-blue text-xs">{{
-      isYearly ? `$${addon.priceYearly}/yr` : `$${addon.priceMonthly}/mo`
+      isYearly ? `+$${addon.priceYearly}/yr` : `+$${addon.priceMonthly}/mo`
     }}</span>
   </label>
 </template>
