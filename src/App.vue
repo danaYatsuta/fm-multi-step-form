@@ -132,15 +132,13 @@ function onSubmit() {
 }
 
 function onNextStepButtonClick() {
-  switch (currentStep.value) {
-    case 1:
+  if (currentStep.value === 1) {
       onSubmit()
-      break
-    case 2:
-      currentStep.value = 3
-      lastAvailableStep.value = Math.max(lastAvailableStep.value, 3) as Step
-      break
+    return
   }
+
+  currentStep.value++
+  lastAvailableStep.value = Math.max(currentStep.value, lastAvailableStep.value) as Step
 }
 </script>
 
