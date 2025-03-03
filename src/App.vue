@@ -120,6 +120,13 @@ function validateForm(): boolean {
   return true
 }
 
+watch(
+  () => form.value.addons,
+  () => {
+    form.value.addons.sort((a, b) => a.id - b.id)
+  },
+)
+
 function onStepButtonClick(step: Step) {
   if (step === currentStep.value || step > lastAvailableStep.value) return
   if (currentStep.value === 1 && validateForm() === false) return
@@ -133,7 +140,7 @@ function onSubmit() {
 
 function onNextStepButtonClick() {
   if (currentStep.value === 1) {
-      onSubmit()
+    onSubmit()
     return
   }
 
@@ -179,7 +186,7 @@ function onNextStepButtonClick() {
           @submit="currentStep = lastAvailableStep = 4"
         />
 
-        <StepFour v-if="currentStep === 4" />
+        <StepFour v-if="currentStep === 4" :form />
       </main>
     </div>
 
