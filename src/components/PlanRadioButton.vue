@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { Plan } from '../types'
 
 const { plan, isYearly } = defineProps<{
@@ -8,10 +7,6 @@ const { plan, isYearly } = defineProps<{
 }>()
 
 const model = defineModel<Plan>()
-
-const displayPrice = computed(() => {
-  return isYearly ? `$${plan.priceYearly}/yr` : `$${plan.priceMonthly}/mo`
-})
 </script>
 
 <template>
@@ -22,7 +17,9 @@ const displayPrice = computed(() => {
     <img :src="`/src/assets/img/${plan.icon}`" aria-hidden="true" class="self-start" />
     <span>
       <span class="text-marine-blue block font-medium">{{ plan.name }}</span>
-      <span class="block text-sm">{{ displayPrice }}</span>
+      <span class="block text-sm">{{
+        isYearly ? `$${plan.priceYearly}/yr` : `$${plan.priceMonthly}/mo`
+      }}</span>
       <span v-if="isYearly" class="text-marine-blue text-sm">2 months free</span>
     </span>
   </label>

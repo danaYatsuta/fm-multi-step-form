@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Addon } from '@/types'
-import { computed } from 'vue'
 
 const { addon, isYearly } = defineProps<{
   addon: Addon
@@ -8,10 +7,6 @@ const { addon, isYearly } = defineProps<{
 }>()
 
 const model = defineModel<Addon[]>()
-
-const displayPrice = computed(() => {
-  return isYearly ? `$${addon.priceYearly}/yr` : `$${addon.priceMonthly}/mo`
-})
 </script>
 
 <template>
@@ -29,6 +24,8 @@ const displayPrice = computed(() => {
         <span class="text-xs">{{ addon.description }}</span>
       </span>
     </span>
-    <span class="text-purplish-blue text-xs">{{ displayPrice }}</span>
+    <span class="text-purplish-blue text-xs">{{
+      isYearly ? `$${addon.priceYearly}/yr` : `$${addon.priceMonthly}/mo`
+    }}</span>
   </label>
 </template>
