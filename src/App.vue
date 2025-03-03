@@ -2,23 +2,71 @@
 import validator from 'validator'
 import { ref, watch } from 'vue'
 import StepButton from './components/StepButton.vue'
-import StepOne from './components/StepOne.vue'
-import StepTwo from './components/StepTwo.vue'
-import StepThree from './components/StepThree.vue'
 import StepFour from './components/StepFour.vue'
-import type { Form, FormErrors } from './types.d.ts'
+import StepOne from './components/StepOne.vue'
+import StepThree from './components/StepThree.vue'
+import StepTwo from './components/StepTwo.vue'
+import type { Addon, Form, FormErrors, Plan } from './types.d.ts'
 
 type Step = 1 | 2 | 3 | 4
 
-const currentStep = ref<Step>(4)
-const lastAvailableStep = ref<Step>(4)
+const currentStep = ref<Step>(2)
+const lastAvailableStep = ref<Step>(2)
+
+const plans: Plan[] = [
+  {
+    id: 0,
+    name: 'Arcade',
+    priceMonthly: 9,
+    priceYearly: 90,
+    icon: 'icon-arcade.svg',
+  },
+  {
+    id: 1,
+    name: 'Advanced',
+    priceMonthly: 12,
+    priceYearly: 120,
+    icon: 'icon-advanced.svg',
+  },
+  {
+    id: 2,
+    name: 'Pro',
+    priceMonthly: 15,
+    priceYearly: 150,
+    icon: 'icon-pro.svg',
+  },
+]
+
+const addons: Addon[] = [
+  {
+    id: 0,
+    name: 'Online service',
+    priceMonthly: 1,
+    priceYearly: 10,
+    description: 'Access to multiplayer games',
+  },
+  {
+    id: 1,
+    name: 'Larger storage',
+    priceMonthly: 2,
+    priceYearly: 20,
+    description: 'Extra 1TB of cloud save',
+  },
+  {
+    id: 2,
+    name: 'Customizable profile',
+    priceMonthly: 2,
+    priceYearly: 20,
+    description: 'Custom theme on your profile',
+  },
+]
 
 const form = ref<Form>({
   name: '',
   email: '',
   phoneNumber: '',
-  plan: 'arcade',
   isYearly: false,
+  plan: plans[0],
   addons: [],
 })
 
@@ -122,12 +170,14 @@ function onNextStepButtonClick() {
         <StepTwo
           v-if="currentStep === 2"
           v-model="form"
+          :plans="plans"
           @submit="currentStep = lastAvailableStep = 3"
         />
 
         <StepThree
           v-if="currentStep === 3"
           v-model="form"
+          :addons="addons"
           @submit="currentStep = lastAvailableStep = 4"
         />
 

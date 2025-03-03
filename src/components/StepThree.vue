@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import type { Form } from '@/types'
+import type { Addon, Form } from '@/types'
 import AddonCheckbox from './AddonCheckbox.vue'
 import AppHeader from './AppHeader.vue'
 
 defineEmits(['submit'])
+
+defineProps<{
+  addons: Addon[]
+}>()
 
 const model = defineModel<Form>({ required: true })
 </script>
@@ -15,27 +19,11 @@ const model = defineModel<Form>({ required: true })
 
   <form class="mt-5 flex flex-col gap-3" @submit.prevent="$emit('submit')">
     <AddonCheckbox
+      v-for="addon in addons"
+      :key="addon.id"
       v-model="model.addons"
-      addon-name="Online service"
-      description="Access to multiplayer games"
-      :price="model.isYearly ? '+$10/yr' : '+$1/mo'"
-      value="online_service"
-    />
-
-    <AddonCheckbox
-      v-model="model.addons"
-      addon-name="Larger storage"
-      description="Extra 1TB of cloud save"
-      :price="model.isYearly ? '+$20/yr' : '+$2/mo'"
-      value="larger_storage"
-    />
-
-    <AddonCheckbox
-      v-model="model.addons"
-      addon-name="Customizable profile"
-      description="Custom theme on your profile"
-      :price="model.isYearly ? '+$20/yr' : '+$2/mo'"
-      value="customizable_profile"
+      :addon
+      :is-yearly="model.isYearly"
     />
 
     <button type="submit" class="hidden" aria-label="Next Step"></button>

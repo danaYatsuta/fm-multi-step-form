@@ -1,13 +1,24 @@
-export type Plan = 'arcade' | 'advanced' | 'pro'
+interface Option {
+  id: number
+  name: string
+  priceMonthly: number
+  priceYearly: number
+}
 
-export type Addon = 'online_service' | 'larger_storage' | 'customizable_profile'
+export interface Plan extends Option {
+  icon: string
+}
+
+export interface Addon extends Option {
+  description: string
+}
 
 export interface Form {
   name: string
   email: string
   phoneNumber: string
-  plan: Plan
   isYearly: boolean
+  plan: Plan
   addons: Addon[]
 }
 

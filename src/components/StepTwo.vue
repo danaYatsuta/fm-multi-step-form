@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import type { Form, Plan } from '@/types'
 import AppHeader from './AppHeader.vue'
 import PlanRadioButton from './PlanRadioButton.vue'
-import type { Form } from '@/types.d.ts'
 
 defineEmits(['submit'])
+
+defineProps<{
+  plans: Plan[]
+}>()
 
 const model = defineModel<Form>({ required: true })
 </script>
@@ -15,30 +19,11 @@ const model = defineModel<Form>({ required: true })
 
   <form class="mt-5 flex flex-col gap-3" @submit.prevent="$emit('submit')">
     <PlanRadioButton
+      v-for="plan in plans"
+      :key="plan.id"
       v-model="model.plan"
-      value="arcade"
-      icon="icon-arcade.svg"
-      plan-name="Arcade"
-      :price="model.isYearly ? '$90/yr' : '$9/mo'"
-      :extra-info="model.isYearly ? '2 months free' : undefined"
-    />
-
-    <PlanRadioButton
-      v-model="model.plan"
-      icon="icon-advanced.svg"
-      plan-name="Advanced"
-      :price="model.isYearly ? '$120/yr' : '$12/mo'"
-      value="advanced"
-      :extra-info="model.isYearly ? '2 months free' : undefined"
-    />
-
-    <PlanRadioButton
-      v-model="model.plan"
-      icon="icon-pro.svg"
-      plan-name="Pro"
-      :price="model.isYearly ? '$150/yr' : '$15/mo'"
-      value="pro"
-      :extra-info="model.isYearly ? '2 months free' : undefined"
+      :plan
+      :is-yearly="model.isYearly"
     />
 
     <div
