@@ -10,8 +10,8 @@ import type { Addon, Form, FormErrors, Plan } from './types.d.ts'
 
 type Step = 1 | 2 | 3 | 4
 
-const currentStep = ref<Step>(2)
-const lastAvailableStep = ref<Step>(2)
+const currentStep = ref<Step>(4)
+const lastAvailableStep = ref<Step>(4)
 
 const plans: Plan[] = [
   {
@@ -204,11 +204,20 @@ function onNextStepButtonClick() {
       </button>
 
       <button
+        v-if="currentStep !== 4"
         type="button"
         class="bg-marine-blue h-10 rounded-sm px-4 text-sm font-bold text-white"
         @click="onNextStepButtonClick"
       >
         Next Step
+      </button>
+
+      <button
+        v-else
+        type="submit"
+        class="bg-purplish-blue h-10 rounded-sm px-4 text-sm font-bold text-white"
+      >
+        Confirm
       </button>
     </div>
   </div>
