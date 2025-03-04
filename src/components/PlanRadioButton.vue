@@ -18,7 +18,7 @@ const model = defineModel<Plan>()
     <span>
       <span class="text-marine-blue block font-medium">{{ plan.name }}</span>
       <span class="block text-sm">{{
-        isYearly ? `$${plan.priceYearly}/yr` : `$${plan.priceMonthly}/mo`
+        $formatPriceString(isYearly ? plan.priceYearly : plan.priceMonthly, isYearly)
       }}</span>
       <span v-if="isYearly" class="text-marine-blue text-sm">2 months free</span>
     </span>

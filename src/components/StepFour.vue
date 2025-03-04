@@ -9,21 +9,21 @@ const { form } = defineProps<{
   form: Form
 }>()
 
-const totalPriceDisplay = computed(() => {
+const totalPrice = computed(() => {
   if (form.isYearly) {
-    let total = form.plan.priceYearly
+    let result = form.plan.priceYearly
     form.addons.forEach((addon) => {
-      total += addon.priceYearly
+      result += addon.priceYearly
     })
 
-    return `$${total}/yr`
+    return result
   } else {
-    let total = form.plan.priceMonthly
+    let result = form.plan.priceMonthly
     form.addons.forEach((addon) => {
-      total += addon.priceMonthly
+      result += addon.priceMonthly
     })
 
-    return `$${total}/mo`
+    return result
   }
 })
 </script>
@@ -41,7 +41,14 @@ const totalPriceDisplay = computed(() => {
         </p>
         <button type="button" class="underline" @click="$emit('returnToStepTwo')">Change</button>
       </div>
-      <p>{{ form.isYearly ? `$${form.plan.priceYearly}/yr` : `$${form.plan.priceMonthly}/mo` }}</p>
+      <p>
+        {{
+          $formatPriceString(
+            form.isYearly ? form.plan.priceYearly : form.plan.priceMonthly,
+            form.isYearly,
+          )
+        }}
+      </p>
     </div>
 
     <hr class="text-light-gray" />
@@ -49,13 +56,19 @@ const totalPriceDisplay = computed(() => {
     <div v-for="addon in form.addons" :key="addon.id" class="flex justify-between">
       <p>{{ addon.name }}</p>
       <p class="text-marine-blue">
-        {{ form.isYearly ? `+$${addon.priceYearly}/yr` : `+$${addon.priceMonthly}/mo` }}
+        {{
+          $formatPriceString(
+            form.isYearly ? addon.priceYearly : addon.priceMonthly,
+            form.isYearly,
+            true,
+          )
+        }}
       </p>
     </div>
   </div>
 
   <div class="mt-7 flex justify-between px-4">
     <p class="text-sm">Total {{ form.isYearly ? '(per year)' : '(per month)' }}</p>
-    <p class="text-purplish-blue font-bold">{{ totalPriceDisplay }}</p>
+    <p class="text-purplish-blue font-bold">{{ $formatPriceString(totalPrice, form.isYearly) }}</p>
   </div>
 </template>
