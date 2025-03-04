@@ -186,7 +186,7 @@ function onNextStepButtonClick() {
           @submit="currentStep = lastAvailableStep = 4"
         />
 
-        <StepFour v-if="currentStep === 4" :form />
+        <StepFour v-if="currentStep === 4" :form @return-to-step-two="currentStep = 2" />
       </main>
     </div>
 

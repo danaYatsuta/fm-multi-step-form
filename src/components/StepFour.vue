@@ -3,6 +3,8 @@ import type { Form } from '@/types'
 import AppHeader from './AppHeader.vue'
 import { computed } from 'vue'
 
+defineEmits(['returnToStepTwo'])
+
 const { form } = defineProps<{
   form: Form
 }>()
@@ -37,7 +39,7 @@ const totalPriceDisplay = computed(() => {
         <p class="text-marine-blue font-medium">
           {{ form.plan.name + (form.isYearly ? ' (Yearly)' : ' (Monthly)') }}
         </p>
-        <button type="button" class="underline">Change</button>
+        <button type="button" class="underline" @click="$emit('returnToStepTwo')">Change</button>
       </div>
       <p>{{ form.isYearly ? `$${form.plan.priceYearly}/yr` : `$${form.plan.priceMonthly}/mo` }}</p>
     </div>
