@@ -8,7 +8,7 @@ import StepThree from './components/StepThree.vue'
 import StepTwo from './components/StepTwo.vue'
 import type { Addon, Form, FormErrors, Plan } from './types.d.ts'
 
-type Step = 1 | 2 | 3 | 4
+type Step = 1 | 2 | 3 | 4 | 5
 
 const currentStep = ref<Step>(4)
 const lastAvailableStep = ref<Step>(4)
@@ -128,24 +128,46 @@ watch(
 )
 
 function onStepButtonClick(step: Step) {
-  if (step === currentStep.value || step > lastAvailableStep.value) return
-  if (currentStep.value === 1 && validateForm() === false) return
+  if (
+    step === currentStep.value ||
+    step > lastAvailableStep.value ||
+    currentStep.value === 5 ||
+    (currentStep.value === 1 && validateForm() === false)
+  )
+    return
 
   currentStep.value = step
 }
 
-function onSubmit() {
+function onSubmitStepOne() {
   if (validateForm()) currentStep.value = lastAvailableStep.value = 2
 }
 
 function onNextStepButtonClick() {
   if (currentStep.value === 1) {
-    onSubmit()
+    onSubmitStepOne()
     return
   }
 
   currentStep.value++
   lastAvailableStep.value = Math.max(currentStep.value, lastAvailableStep.value) as Step
+}
+
+function onSubmit() {
+  const formData = {
+    name: form.value.name,
+    email: form.value.email,
+    phoneNumber: form.value.phoneNumber,
+    isYearly: form.value.isYearly,
+    planId: form.value.plan.id,
+    addonIds: form.value.addons.map((addon) => addon.id),
+  }
+
+  // send formData to backend here
+  console.log(formData)
+
+  // assuming POST request is successful
+  currentStep.value = 5
 }
 </script>
 
@@ -159,7 +181,7 @@ function onNextStepButtonClick() {
           v-for="step in 4"
           :key="step"
           :number="step"
-          :active="step == currentStep"
+          :active="step === currentStep || (step === 4 && currentStep === 5)"
           @click="onStepButtonClick(step as Step)"
         />
       </nav>
@@ -169,7 +191,7 @@ function onNextStepButtonClick() {
           v-if="currentStep === 1"
           v-model="form"
           :form-errors="formErrors"
-          @submit="onSubmit"
+          @submit="onSubmitStepOne"
         />
 
         <StepTwo
@@ -191,6 +213,7 @@ function onNextStepButtonClick() {
     </div>
 
     <div
+      v-if="currentStep !== 5"
       class="flex h-18 items-center bg-white px-4"
       :class="{ 'justify-end': currentStep === 1, 'justify-between': currentStep > 1 }"
     >
@@ -205,7 +228,7 @@ function onNextStepButtonClick() {
 
       <button
         v-if="currentStep !== 4"
-        type="button"
+        type="submit"
         class="bg-marine-blue h-10 rounded-sm px-4 text-sm font-bold text-white"
         @click="onNextStepButtonClick"
       >
@@ -216,6 +239,7 @@ function onNextStepButtonClick() {
         v-else
         type="submit"
         class="bg-purplish-blue h-10 rounded-sm px-4 text-sm font-bold text-white"
+        @click="onSubmit"
       >
         Confirm
       </button>
